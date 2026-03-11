@@ -1,0 +1,147 @@
+﻿@import "tailwindcss";
+
+/*  Sky-blue accent (sabari-works)  */
+@theme {
+  --color-indigo-300: #7dd3fc;
+  --color-indigo-400: #38bdf8;
+  --color-indigo-500: #0ea5e9;
+  --color-indigo-600: #0284c7;
+  --color-indigo-700: #0369a1;
+  --color-indigo-800: #075985;
+  --color-indigo-900: #0c4a6e;
+  --color-indigo-950: #082f49;
+
+  --color-violet-300: #c4b5fd;
+  --color-violet-400: #a78bfa;
+  --color-violet-500: #8b5cf6;
+  --color-violet-600: #7c3aed;
+
+  --color-purple-400: #c084fc;
+  --color-purple-500: #a855f7;
+  --color-purple-600: #9333ea;
+}
+
+/*  Design tokens  */
+:root {
+  --bg: #eff7ff;
+  --surface: #ffffff;
+  --surface-alt: #f1f5f9;
+  --accent: #0ea5e9;
+  --accent-dark: #0284c7;
+  --accent2: #7c3aed;
+  --text: #0f172a;
+  --muted: #64748b;
+  --border: #e2e8f0;
+  --border-strong: #cbd5e1;
+  --shadow-sm: 0 1px 4px rgba(15,23,42,0.06), 0 1px 2px rgba(15,23,42,0.04);
+  --shadow-md: 0 4px 16px rgba(15,23,42,0.08), 0 2px 6px rgba(15,23,42,0.04);
+  --shadow-lg: 0 16px 48px rgba(15,23,42,0.12), 0 4px 16px rgba(15,23,42,0.06);
+  --nav-surface: rgba(248, 250, 252, 0.85);
+}
+
+[data-theme="dark"] {
+  --bg: #0a0f1a;
+  --surface: #111827;
+  --surface-alt: #1e293b;
+  --text: #f1f5f9;
+  --muted: #94a3b8;
+  --border: #1e293b;
+  --border-strong: #334155;
+  --shadow-sm: 0 1px 4px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.4), 0 2px 6px rgba(0,0,0,0.2);
+  --shadow-lg: 0 16px 48px rgba(0,0,0,0.5), 0 4px 16px rgba(0,0,0,0.3);
+  --nav-surface: rgba(10, 15, 26, 0.9);
+}
+
+/*  Base reset  */
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background-color: var(--bg);
+  background-image: radial-gradient(rgba(14, 165, 233, 0.06) 1px, transparent 1px);
+  background-size: 28px 28px;
+  color: var(--text);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+h1, h2, h3 {
+  font-family: 'Syne', system-ui, sans-serif;
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+}
+
+/*  Light-mode Tailwind colour overrides  */
+/* Cards / section backgrounds */
+[data-theme="light"] .bg-gray-950 { background-color: #eff7ff !important; }
+[data-theme="light"] .bg-gray-900 { background-color: #ffffff !important; }
+[data-theme="light"] .bg-gray-800 { background-color: #f1f5f9 !important; }
+
+/* Text */
+[data-theme="light"] .text-white    { color: #0f172a !important; }
+[data-theme="light"] .text-gray-300 { color: #334155 !important; }
+[data-theme="light"] .text-gray-400 { color: #64748b !important; }
+[data-theme="light"] .text-gray-500 { color: #94a3b8 !important; }
+
+/* Borders */
+[data-theme="light"] .border-gray-800 { border-color: #e2e8f0 !important; }
+[data-theme="light"] .border-gray-700 { border-color: #cbd5e1 !important; }
+
+/* Keep white text on filled accent buttons */
+[data-theme="light"] .bg-indigo-600,
+[data-theme="light"] .bg-indigo-500,
+[data-theme="light"] .bg-indigo-700 { color: #ffffff; }
+
+/* Skill card tinted backgrounds */
+[data-theme="light"] .bg-indigo-950\/50,  [data-theme="light"] .bg-indigo-950\/80  { background-color: rgba(14,165,233,0.10) !important; }
+[data-theme="light"] .bg-violet-950\/50,  [data-theme="light"] .bg-violet-950\/80  { background-color: rgba(124,58,237,0.08) !important; }
+[data-theme="light"] .bg-cyan-950\/50,    [data-theme="light"] .bg-cyan-950\/80    { background-color: rgba(8,145,178,0.08) !important; }
+[data-theme="light"] .bg-emerald-950\/50, [data-theme="light"] .bg-emerald-950\/80 { background-color: rgba(4,120,87,0.08) !important; }
+[data-theme="light"] .bg-purple-950\/50,  [data-theme="light"] .bg-purple-950\/80  { background-color: rgba(147,51,234,0.08) !important; }
+[data-theme="light"] .bg-rose-950\/50,    [data-theme="light"] .bg-rose-950\/80    { background-color: rgba(225,29,72,0.08) !important; }
+
+[data-theme="light"] .bg-indigo-950\/30  { background-color: rgba(14,165,233,0.07) !important; }
+[data-theme="light"] .bg-violet-950\/30  { background-color: rgba(124,58,237,0.06) !important; }
+[data-theme="light"] .bg-cyan-950\/30    { background-color: rgba(8,145,178,0.06) !important; }
+[data-theme="light"] .bg-emerald-950\/30 { background-color: rgba(4,120,87,0.06) !important; }
+[data-theme="light"] .bg-purple-950\/30  { background-color: rgba(147,51,234,0.06) !important; }
+[data-theme="light"] .bg-rose-950\/30    { background-color: rgba(225,29,72,0.06) !important; }
+
+/* Skill tag text */
+[data-theme="light"] .text-indigo-300  { color: #0369a1 !important; }
+[data-theme="light"] .text-violet-300  { color: #6d28d9 !important; }
+[data-theme="light"] .text-cyan-300    { color: #0e7490 !important; }
+[data-theme="light"] .text-emerald-300 { color: #047857 !important; }
+[data-theme="light"] .text-purple-300  { color: #7e22ce !important; }
+[data-theme="light"] .text-rose-300    { color: #be123c !important; }
+
+/* Skill tag borders */
+[data-theme="light"] .border-indigo-900\/60  { border-color: rgba(14,165,233,0.35) !important; }
+[data-theme="light"] .border-violet-900\/60  { border-color: rgba(124,58,237,0.35) !important; }
+[data-theme="light"] .border-cyan-900\/60    { border-color: rgba(8,145,178,0.35) !important; }
+[data-theme="light"] .border-emerald-900\/60 { border-color: rgba(4,120,87,0.35) !important; }
+[data-theme="light"] .border-purple-900\/60  { border-color: rgba(147,51,234,0.35) !important; }
+[data-theme="light"] .border-rose-900\/60    { border-color: rgba(225,29,72,0.35) !important; }
+
+/* Faint overlays */
+[data-theme="light"] .bg-white\/5 { background-color: rgba(14,165,233,0.06) !important; }
+
+/* Accent text — prevent washed-out sky-blue on white */
+[data-theme="light"] .text-indigo-400 { color: #0369a1 !important; }
+[data-theme="light"] .text-indigo-500 { color: #0284c7 !important; }
+
+/* Accent backgrounds / borders in light mode */
+[data-theme="light"] .bg-indigo-500\/5  { background-color: rgba(14,165,233,0.06) !important; }
+[data-theme="light"] .bg-indigo-500\/10 { background-color: rgba(14,165,233,0.10) !important; }
+[data-theme="light"] .border-indigo-500\/30 { border-color: rgba(2,132,199,0.30) !important; }
+[data-theme="light"] .border-indigo-500\/50 { border-color: rgba(2,132,199,0.50) !important; }
+[data-theme="light"] .border-indigo-500\/60 { border-color: rgba(2,132,199,0.60) !important; }
