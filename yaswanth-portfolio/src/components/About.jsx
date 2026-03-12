@@ -36,18 +36,20 @@ const About = () => {
         className="flex flex-col gap-4 mb-12"
       >
         <p className={`text-lg leading-relaxed ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
-          I'm a Computer Science Engineering student specializing in{' '}
-          <span className={`font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>AI and Machine Learning</span>. I build
-          intelligent, scalable, and visually polished web applications — from
-          machine learning pipelines to full-stack platforms.
+          I'm{' '}
+          <span className={`font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>Yaswanth</span>, a Computer Science Engineering student specializing in{' '}
+          <span className={`font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>Artificial Intelligence and Machine Learning</span>{' '}
+          at{' '}
+          <span className={`font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>Thiagarajar College of Engineering</span>. I enjoy building intelligent systems and full-stack applications that solve real-world problems.
         </p>
         <p className={`text-lg leading-relaxed ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
-          I've interned at{' '}
-          <span className={`font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>Tarcin Robotic LLP</span>, earned
-          industry certifications from{' '}
-          <span className={`font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>IBM</span> and{' '}
-          <span className={`font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>DeepLearning.AI</span>, and I'm actively
-          seeking opportunities where I can contribute and grow.
+          My work focuses on AI-powered applications, web platforms, and data-driven solutions, with experience in technologies like{' '}
+          <span className={`font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>Python, React, Node.js</span>, and machine learning tools. I'm passionate about learning new technologies and applying them to create practical, scalable software systems.
+        </p>
+        <p className={`text-lg leading-relaxed ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+          Currently, I'm seeking opportunities to grow as a{' '}
+          <span className={`font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>software developer and AI engineer</span>{' '}
+          while contributing to impactful projects.
         </p>
       </motion.div>
 

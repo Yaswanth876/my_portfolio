@@ -19,25 +19,18 @@ const Footer = () => {
     <footer className={`border-t transition-colors ${
       isDark ? 'bg-gray-950 border-gray-800' : 'bg-white border-gray-200'
     }`}>
-      <div className="w-full px-6 py-5 flex items-center gap-4">
-
-        {/* Logo mark */}
-        <div className={`w-6 h-6 rounded flex items-center justify-center text-xs font-bold shrink-0 ${
-          isDark ? 'bg-gray-800 text-gray-400' : 'bg-gray-100 text-gray-500'
-        }`}>
-          Y
-        </div>
+      <div className="w-full px-6 py-5 flex flex-col items-center gap-4 sm:flex-row sm:gap-4">
 
         {/* Copyright */}
-        <p className={`text-sm ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>
+        <p className={`text-sm w-full sm:w-auto text-center sm:text-left ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>
           © {year} Yaswanth V. All rights reserved.
         </p>
 
-        {/* Spacer */}
-        <div className="flex-1" />
+        {/* Spacer (desktop only) */}
+        <div className="hidden sm:flex flex-1" />
 
         {/* Nav links */}
-        <nav className="flex items-center gap-6">
+        <nav className="flex flex-wrap justify-center items-center gap-x-5 gap-y-2 sm:flex-nowrap sm:gap-6">
           {navLinks.map(({ label, to }) => (
             <Link
               key={label}

@@ -88,7 +88,7 @@ const Experience = () => {
         <p className={`text-sm font-medium tracking-widest uppercase mb-3 ${isDark ? 'text-indigo-400' : 'text-sky-600'}`}>
           Journey
         </p>
-        <h2 className={`text-4xl font-bold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+        <h2 className={`text-2xl sm:text-4xl font-bold mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}>
           Experience &amp; Hackathons
         </h2>
         <p className={`max-w-xl ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
@@ -100,7 +100,7 @@ const Experience = () => {
       {/* Timeline */}
       <div className="relative">
         {/* Vertical line */}
-        <div className={`absolute left-6 top-2 bottom-2 w-px bg-gradient-to-b from-sky-500/60 via-sky-500/20 to-transparent hidden sm:block`} />
+        <div className={`absolute left-6 top-2 bottom-2 w-px bg-gradient-to-b from-sky-500/60 via-sky-500/20 to-transparent`} />
 
         <div className="flex flex-col gap-10">
           {timeline.map((item, index) => {
@@ -109,20 +109,20 @@ const Experience = () => {
             return (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-60px' }}
                 transition={{ duration: 0.5, ease: 'easeOut', delay: index * 0.08 }}
-                className="relative sm:pl-16"
+                className="relative pl-16"
               >
                 {/* Timeline dot */}
-                <div className="absolute left-[18px] top-6 hidden sm:flex items-center justify-center">
+                <div className="absolute left-[18px] top-6 flex items-center justify-center">
                   <span className={`w-3 h-3 rounded-full ${a.dot} border-2 ${isDark ? 'border-gray-950' : 'border-slate-100'} z-10 relative`} />
                   <span className={`absolute w-5 h-5 rounded-full ${a.ping} animate-ping`} />
                 </div>
 
                 {/* Card */}
-                <div className={`border rounded-2xl p-6 transition-all duration-300 ${
+                <div className={`border rounded-2xl p-4 sm:p-6 transition-all duration-300 ${
                   isDark
                     ? `bg-gray-900 border-gray-800 ${a.hover}`
                     : `bg-white border-gray-200 shadow-sm ${a.hoverLight}`
@@ -147,11 +147,11 @@ const Experience = () => {
 
                   {/* Title + subtitle */}
                   <div className="mb-3">
-                    <div className="flex items-center gap-2 mb-1">
-                      <div className={`w-8 h-8 rounded-lg border flex items-center justify-center shrink-0 ${a.iconBg}`}>
+                    <div className="flex items-start gap-2 mb-1">
+                      <div className={`w-8 h-8 rounded-lg border flex items-center justify-center shrink-0 mt-0.5 ${a.iconBg}`}>
                         {isWork ? <Briefcase size={14} className={a.icon} /> : <Trophy size={14} className={a.icon} />}
                       </div>
-                      <h3 className={`font-semibold text-lg leading-snug ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                      <h3 className={`font-semibold text-base sm:text-lg leading-snug ${isDark ? 'text-white' : 'text-gray-900'}`}>
                         {item.title}
                       </h3>
                     </div>

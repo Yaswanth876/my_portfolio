@@ -103,8 +103,9 @@ const Hero = () => {
         animate="visible"
         className={`text-base md:text-lg max-w-2xl leading-relaxed mb-10 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}
       >
-        I build intelligent, scalable, and visually stunning applications — from
-        machine learning models to production-ready web experiences.
+        I design and build intelligent software systems and full-stack applications
+        that apply machine learning, data, and modern development technologies
+        to solve real-world problems.
       </motion.p>
 
       {/* CTA Buttons */}

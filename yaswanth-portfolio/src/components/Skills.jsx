@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Code2, Layout, Server, Database, BrainCircuit, Wrench, Layers } from 'lucide-react'
+import { Code2, Layout, Server, Database, BrainCircuit, Wrench, Layers, Download } from 'lucide-react'
 import { useTheme } from '../context/ThemeContext'
 
 const skillCategories = [
@@ -115,6 +115,18 @@ const Skills = () => {
           My technical toolkit — built through academic coursework, personal
           projects, and hands-on development.
         </p>
+        <a
+          href="/Yaswanth Resume.pdf"
+          download="Yaswanth_Resume.pdf"
+          className={`mt-5 inline-flex items-center gap-2 text-sm font-medium px-5 py-2.5 rounded-xl border transition-all duration-200 hover:-translate-y-0.5 ${
+            isDark
+              ? 'bg-indigo-500/10 border-indigo-500/30 text-indigo-400 hover:bg-indigo-500/20 hover:border-indigo-400'
+              : 'bg-sky-50 border-sky-300 text-sky-600 hover:bg-sky-100 hover:border-sky-400'
+          }`}
+        >
+          <Download size={15} />
+          Download Resume
+        </a>
       </motion.div>
 
       {/* Skills grid */}
