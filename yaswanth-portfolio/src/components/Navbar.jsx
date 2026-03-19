@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react'
-import { NavLink } from 'react-router-dom'
+import { useState, useEffect, useCallback } from 'react'
 import { Menu, Sun, Moon } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { useTheme } from '../context/ThemeContext'
@@ -15,33 +14,81 @@ import {
 } from './ui/sheet'
 
 const navLinks = [
-  { label: 'Home',           to: '/'               },
-  { label: 'Projects',       to: '/projects'       },
-  { label: 'Skills',         to: '/skills'         },
-  { label: 'Experience',     to: '/experience'     },
-  { label: 'Certifications', to: '/certifications' },
-  { label: 'Contact',        to: '/contact'        },
+  { label: 'Home',           href: '#home'           },
+  { label: 'About',          href: '#about'          },
+  { label: 'Skills',         href: '#skills'         },
+  { label: 'Projects',       href: '#projects'       },
+  { label: 'Experience',     href: '#experience'     },
+  { label: 'Certifications', href: '#certifications' },
+  { label: 'Contact',        href: '#contact'        },
 ]
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [activeSection, setActiveSection] = useState('home')
   const { theme, toggleTheme } = useTheme()
 
+  // Handle navbar background on scroll
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20)
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  const linkClass = ({ isActive }) =>
-    `group relative text-sm font-medium transition-colors duration-200 px-3 py-1.5 ${
+  // IntersectionObserver to highlight active section in navbar
+  useEffect(() => {
+    const sectionIds = navLinks.map(l => l.href.replace('#', ''))
+    const observers = []
+
+    const callback = (entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id)
+        }
+      })
+    }
+
+    const observer = new IntersectionObserver(callback, {
+      root: null,
+      // Fire when the top of the section crosses the middle of the viewport
+      rootMargin: '-40% 0px -55% 0px',
+      threshold: 0,
+    })
+
+    sectionIds.forEach(id => {
+      const el = document.getElementById(id)
+      if (el) {
+        observer.observe(el)
+        observers.push(el)
+      }
+    })
+
+    return () => {
+      observers.forEach(el => observer.unobserve(el))
+    }
+  }, [])
+
+  const handleNavClick = useCallback((e, href) => {
+    e.preventDefault()
+    const id = href.replace('#', '')
+    const el = document.getElementById(id)
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+    setMenuOpen(false)
+  }, [])
+
+  const linkClass = (href) => {
+    const isActive = activeSection === href.replace('#', '')
+    return `group relative text-sm font-medium transition-colors duration-200 px-3 py-1.5 ${
       isActive
         ? 'text-sky-400'
         : theme === 'dark'
           ? 'text-gray-400 hover:text-sky-400'
           : 'text-gray-500 hover:text-sky-600'
     }`
+  }
 
   return (
     <motion.nav
@@ -61,23 +108,31 @@ const Navbar = () => {
       <div className="w-full px-6 py-4 flex items-center justify-between">
 
         {/* Logo */}
-        <NavLink to="/" className={`text-xl font-bold tracking-tight transition group ${
-          theme === 'dark' ? 'text-white' : 'text-gray-900'
-        }`}>
+        <a
+          href="#home"
+          onClick={e => handleNavClick(e, '#home')}
+          className={`text-xl font-bold tracking-tight transition group ${
+            theme === 'dark' ? 'text-white' : 'text-gray-900'
+          }`}
+        >
           Yaswanth<span className="text-indigo-500 group-hover:text-indigo-400 transition">.</span>
-        </NavLink>
+        </a>
 
         {/* Desktop links + Theme toggle + Mobile menu */}
         <div className="flex items-center gap-3">
           <ul className="hidden md:flex items-center gap-1">
-            {navLinks.map(({ label, to }) => (
+            {navLinks.map(({ label, href }) => (
               <motion.li key={label} whileHover={{ y: -1 }} transition={{ type: 'spring', stiffness: 300, damping: 20 }}>
-                <NavLink to={to} className={linkClass}>
+                <a
+                  href={href}
+                  onClick={e => handleNavClick(e, href)}
+                  className={linkClass(href)}
+                >
                   {label}
-                  <span className={`absolute bottom-0 left-3 right-3 h-[2px] rounded-full transition-all duration-300 origin-left scale-x-0 group-hover:scale-x-100 ${
-                    theme === 'dark' ? 'bg-sky-400' : 'bg-sky-500'
-                  }`} />
-                </NavLink>
+                  <span className={`absolute bottom-0 left-3 right-3 h-[2px] rounded-full transition-all duration-300 origin-left ${
+                    activeSection === href.replace('#', '') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+                  } ${theme === 'dark' ? 'bg-sky-400' : 'bg-sky-500'}`} />
+                </a>
               </motion.li>
             ))}
           </ul>
@@ -125,14 +180,15 @@ const Navbar = () => {
               </SheetHeader>
 
               <div className="mt-6 flex flex-col gap-2">
-                {navLinks.map(({ label, to }) => (
+                {navLinks.map(({ label, href }) => (
                   <SheetClose asChild key={label}>
-                    <NavLink
-                      to={to}
-                      className={linkClass}
+                    <a
+                      href={href}
+                      onClick={e => handleNavClick(e, href)}
+                      className={linkClass(href)}
                     >
                       {label}
-                    </NavLink>
+                    </a>
                   </SheetClose>
                 ))}
               </div>

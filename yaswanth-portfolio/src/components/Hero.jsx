@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Link } from 'react-router-dom'
 import { Github, Linkedin, ArrowDown, ArrowRight } from 'lucide-react'
 import { useTheme } from '../context/ThemeContext'
 
@@ -115,14 +114,16 @@ const Hero = () => {
         animate="visible"
         className="flex flex-col sm:flex-row gap-4 mb-12"
       >
-        <Link
-          to="/projects"
+        <a
+          href="#projects"
+          onClick={e => { e.preventDefault(); document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' }) }}
           className="flex items-center gap-2 px-8 py-3 bg-sky-500 hover:bg-sky-600 text-white rounded-full font-medium transition shadow-lg shadow-sky-500/25 hover:shadow-sky-500/50 hover:-translate-y-1 active:scale-[0.97]"
         >
           View Projects <ArrowRight size={16} />
-        </Link>
-        <Link
-          to="/contact"
+        </a>
+        <a
+          href="#contact"
+          onClick={e => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }) }}
           className={`px-8 py-3 border rounded-full font-medium transition hover:-translate-y-1 active:scale-[0.97] ${
             isDark
               ? 'border-gray-700 text-gray-300 hover:border-sky-500/60 hover:bg-sky-500/10 hover:text-sky-400'
@@ -130,7 +131,7 @@ const Hero = () => {
           }`}
         >
           Contact Me
-        </Link>
+        </a>
       </motion.div>
 
       {/* Social Icons */}

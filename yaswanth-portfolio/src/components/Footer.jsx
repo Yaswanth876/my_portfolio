@@ -1,20 +1,26 @@
-import { Link } from 'react-router-dom'
 import { useTheme } from '../context/ThemeContext'
 import { motion } from 'framer-motion'
 
 const navLinks = [
-  { label: 'Home',           to: '/'               },
-  { label: 'Projects',       to: '/projects'       },
-  { label: 'Skills',         to: '/skills'         },
-  { label: 'Experience',     to: '/experience'     },
-  { label: 'Certifications', to: '/certifications' },
-  { label: 'Contact',        to: '/contact'        },
+  { label: 'Home',           href: '#home'           },
+  { label: 'About',          href: '#about'          },
+  { label: 'Skills',         href: '#skills'         },
+  { label: 'Projects',       href: '#projects'       },
+  { label: 'Experience',     href: '#experience'     },
+  { label: 'Certifications', href: '#certifications' },
+  { label: 'Contact',        href: '#contact'        },
 ]
 
 const Footer = () => {
   const year = new Date().getFullYear()
   const { theme } = useTheme()
   const isDark = theme === 'dark'
+
+  const handleClick = (e, href) => {
+    e.preventDefault()
+    const el = document.getElementById(href.replace('#', ''))
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
 
   return (
     <motion.footer
@@ -30,7 +36,8 @@ const Footer = () => {
 
         {/* Brand favicon */}
         <a
-          href="/"
+          href="#home"
+          onClick={e => handleClick(e, '#home')}
           aria-label="Go to home"
           className="flex items-center transition hover:-translate-y-0.5 hover:opacity-80"
         >
@@ -53,16 +60,17 @@ const Footer = () => {
 
         {/* Nav links */}
         <nav className="flex flex-wrap justify-center items-center gap-x-5 gap-y-2 sm:flex-nowrap sm:gap-6">
-          {navLinks.map(({ label, to }) => (
+          {navLinks.map(({ label, href }) => (
             <motion.div key={label} whileHover={{ y: -2 }} transition={{ type: 'spring', stiffness: 300, damping: 22 }}>
-              <Link
-                to={to}
+              <a
+                href={href}
+                onClick={e => handleClick(e, href)}
                 className={`text-sm transition hover:-translate-y-0.5 ${
                   isDark ? 'text-gray-500 hover:text-white' : 'text-gray-400 hover:text-gray-900'
                 }`}
               >
                 {label}
-              </Link>
+              </a>
             </motion.div>
           ))}
         </nav>
