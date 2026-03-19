@@ -36,8 +36,9 @@ const ProjectCard = ({ id, category, title, description, tech, github, live }) =
       viewport={{ once: true, margin: '-30px' }}
       whileHover={{ y: -6 }}
       transition={{ duration: 0.35, ease: 'easeOut' }}
+      className="h-full"
     >
-      <Card className={`group relative rounded-2xl overflow-hidden flex flex-col transition-all duration-300 ${
+      <Card className={`group relative rounded-2xl overflow-hidden flex flex-col h-full transition-all duration-300 ${
         isDark
           ? 'bg-gray-900 border border-gray-800 hover:border-sky-500/60 hover:shadow-xl hover:shadow-sky-500/8'
           : 'bg-white border border-gray-200 hover:border-sky-400/60 hover:shadow-xl hover:shadow-sky-500/10'

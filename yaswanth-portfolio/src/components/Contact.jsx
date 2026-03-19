@@ -82,7 +82,7 @@ const Contact = () => {
 
           <div className="flex flex-col gap-5">
             <a
-              href="mailto:yaswanth@example.com"
+              href="mailto:vsyaswanth008@gmail.com"
               className="flex items-center gap-4 group"
             >
               <div className={`w-11 h-11 rounded-xl border flex items-center justify-center transition ${
@@ -93,13 +93,13 @@ const Contact = () => {
               <div>
                 <p className="text-xs text-gray-500 mb-0.5">Email</p>
                 <p className={`text-sm transition ${isDark ? 'text-white group-hover:text-sky-400' : 'text-gray-700 group-hover:text-sky-600'}`}>
-                  yaswanth@example.com
+                  vsyaswanth008@gmail.com
                 </p>
               </div>
             </a>
 
             <a
-              href="https://github.com"
+              href="https://github.com/yaswanth876"
               target="_blank"
               rel="noreferrer"
               className="flex items-center gap-4 group"
@@ -112,13 +112,13 @@ const Contact = () => {
               <div>
                 <p className="text-xs text-gray-500 mb-0.5">GitHub</p>
                 <p className={`text-sm transition ${isDark ? 'text-white group-hover:text-sky-400' : 'text-gray-700 group-hover:text-sky-600'}`}>
-                  github.com/yaswanth
+                  github.com/yaswanth876
                 </p>
               </div>
             </a>
 
             <a
-              href="https://linkedin.com"
+              href="https://linkedin.com/in/yaswanthv876"
               target="_blank"
               rel="noreferrer"
               className="flex items-center gap-4 group"
@@ -131,7 +131,7 @@ const Contact = () => {
               <div>
                 <p className="text-xs text-gray-500 mb-0.5">LinkedIn</p>
                 <p className={`text-sm transition ${isDark ? 'text-white group-hover:text-sky-400' : 'text-gray-700 group-hover:text-sky-600'}`}>
-                  linkedin.com/in/yaswanth
+                  linkedin.com/in/yaswanthv876
                 </p>
               </div>
             </a>

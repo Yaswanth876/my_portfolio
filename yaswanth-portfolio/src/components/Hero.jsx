@@ -142,7 +142,7 @@ const Hero = () => {
         className="flex items-center gap-3 mb-16"
       >
         <a
-          href="https://github.com"
+          href="https://github.com/yaswanth876"
           target="_blank"
           rel="noreferrer"
           aria-label="GitHub"
@@ -153,7 +153,7 @@ const Hero = () => {
           <Github size={18} />
         </a>
         <a
-          href="https://linkedin.com"
+          href="https://linkedin.com/in/yaswanthv876"
           target="_blank"
           rel="noreferrer"
           aria-label="LinkedIn"

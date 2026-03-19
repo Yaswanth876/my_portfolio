@@ -12,9 +12,9 @@ import { ThemeProvider } from './context/ThemeContext'
 function App() {
   return (
     <ThemeProvider>
-      <div className="min-h-screen flex flex-col overflow-x-hidden">
+      <div className="min-h-screen flex flex-col">
         <Navbar />
-        <main className="pt-20 flex-1 overflow-x-hidden">
+        <main className="pt-20 flex-1">
           {/* Each component's root <section> already carries the id */}
           <Hero />
           <About />
