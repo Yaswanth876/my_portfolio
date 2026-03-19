@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import ProjectCard from './ProjectCard'
 import { projects } from '../data/projects'
 import { useTheme } from '../context/ThemeContext'
+import { Button } from './ui/button'
 
 const FILTERS = ['All', 'AI/ML', 'Full Stack']
 
@@ -64,10 +65,11 @@ const Projects = () => {
         className="flex gap-3 mb-10"
       >
         {FILTERS.map((filter) => (
-          <button
+          <Button
             key={filter}
             onClick={() => setActiveFilter(filter)}
-            className={`px-4 py-1.5 rounded-full text-sm font-medium border transition hover:-translate-y-0.5 active:scale-95
+            variant="outline"
+            className={`rounded-full text-sm font-medium border transition hover:-translate-y-0.5 active:scale-95
               ${activeFilter === filter
                 ? 'bg-sky-500 border-sky-500 text-white'
                 : isDark
@@ -76,7 +78,7 @@ const Projects = () => {
               }`}
           >
             {filter}
-          </button>
+          </Button>
         ))}
       </motion.div>
 

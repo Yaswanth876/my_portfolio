@@ -1,4 +1,5 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
+import { AnimatePresence, motion } from 'framer-motion'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import Home from './pages/Home'
@@ -19,19 +20,48 @@ const Layout = ({ children }) => (
   </div>
 )
 
+const pageTransition = {
+  initial: { opacity: 0, y: 14 },
+  animate: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: -14 },
+}
+
+const PageShell = ({ children }) => (
+  <motion.div
+    variants={pageTransition}
+    initial="initial"
+    animate="animate"
+    exit="exit"
+    transition={{ duration: 0.35, ease: 'easeOut' }}
+    className="min-h-full"
+  >
+    {children}
+  </motion.div>
+)
+
+const AnimatedRoutes = () => {
+  const location = useLocation()
+
+  return (
+    <AnimatePresence mode="wait" initial={false}>
+      <Routes location={location} key={location.pathname}>
+        <Route path="/" element={<PageShell><Home /></PageShell>} />
+        <Route path="/projects" element={<PageShell><ProjectsPage /></PageShell>} />
+        <Route path="/skills" element={<PageShell><SkillsPage /></PageShell>} />
+        <Route path="/experience" element={<PageShell><ExperiencePage /></PageShell>} />
+        <Route path="/certifications" element={<PageShell><CertificationsPage /></PageShell>} />
+        <Route path="/contact" element={<PageShell><ContactPage /></PageShell>} />
+      </Routes>
+    </AnimatePresence>
+  )
+}
+
 function App() {
   return (
     <ThemeProvider>
       <BrowserRouter>
         <Layout>
-          <Routes>
-            <Route path="/"                element={<Home />} />
-            <Route path="/projects"        element={<ProjectsPage />} />
-            <Route path="/skills"          element={<SkillsPage />} />
-            <Route path="/experience"      element={<ExperiencePage />} />
-            <Route path="/certifications"  element={<CertificationsPage />} />
-            <Route path="/contact"         element={<ContactPage />} />
-          </Routes>
+          <AnimatedRoutes />
         </Layout>
       </BrowserRouter>
     </ThemeProvider>

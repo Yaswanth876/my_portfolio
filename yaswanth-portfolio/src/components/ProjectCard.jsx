@@ -1,5 +1,10 @@
 import { Github, ExternalLink } from 'lucide-react'
+import { motion } from 'framer-motion'
 import { useTheme } from '../context/ThemeContext'
+import { Badge } from './ui/badge'
+import { Button } from './ui/button'
+import { Card, CardContent, CardDescription, CardTitle } from './ui/card'
+import { Separator } from './ui/separator'
 
 const categoryStyle = {
   'AI/ML':      {
@@ -25,38 +30,45 @@ const ProjectCard = ({ id, category, title, description, tech, github, live }) =
   const badge = isDark ? style.badgeDark : style.badgeLight
 
   return (
-    <div className={`group relative rounded-2xl overflow-hidden flex flex-col transition-all duration-300 hover:-translate-y-1.5 ${
-      isDark
-        ? 'bg-gray-900 border border-gray-800 hover:border-sky-500/60 hover:shadow-xl hover:shadow-sky-500/8'
-        : 'bg-white border border-gray-200 hover:border-sky-400/60 hover:shadow-xl hover:shadow-sky-500/10'
-    }`}>
+    <motion.div
+      initial={{ opacity: 0, y: 18 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-30px' }}
+      whileHover={{ y: -6 }}
+      transition={{ duration: 0.35, ease: 'easeOut' }}
+    >
+      <Card className={`group relative rounded-2xl overflow-hidden flex flex-col transition-all duration-300 ${
+        isDark
+          ? 'bg-gray-900 border border-gray-800 hover:border-sky-500/60 hover:shadow-xl hover:shadow-sky-500/8'
+          : 'bg-white border border-gray-200 hover:border-sky-400/60 hover:shadow-xl hover:shadow-sky-500/10'
+      }`}>
 
       {/* Top gradient accent bar */}
       <div className={`h-[3px] bg-gradient-to-r ${style.bar} opacity-40 group-hover:opacity-100 transition-opacity duration-300`} />
 
-      <div className="p-6 flex flex-col gap-4 flex-1">
+      <CardContent className="p-6 flex flex-col gap-4 flex-1">
 
       {/* Header row: category badge */}
       <div className="flex items-start justify-between gap-2">
-        <span className={`text-xs font-medium px-2.5 py-1 rounded-full shrink-0 mt-1 ${badge}`}>
+        <Badge className={`shrink-0 mt-1 ${badge}`}>
           {category}
-        </span>
+        </Badge>
       </div>
 
       {/* Title */}
-      <h3 className={`text-lg font-semibold leading-snug ${isDark ? 'text-white' : 'text-gray-900'}`}>
+      <CardTitle className={`text-lg font-semibold leading-snug ${isDark ? 'text-white' : 'text-gray-900'}`}>
         {title}
-      </h3>
+      </CardTitle>
 
       {/* Description */}
-      <p className={`text-sm leading-relaxed flex-1 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+      <CardDescription className={`text-sm leading-relaxed flex-1 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
         {description}
-      </p>
+      </CardDescription>
 
       {/* Tech badges */}
       <div className="flex flex-wrap gap-2">
         {tech.map((t) => (
-          <span
+          <Badge
             key={t}
             className={`text-xs px-3 py-1 rounded-full ${
               isDark
@@ -65,40 +77,54 @@ const ProjectCard = ({ id, category, title, description, tech, github, live }) =
             }`}
           >
             {t}
-          </span>
+          </Badge>
         ))}
       </div>
 
       {/* Action buttons */}
-      <div className={`flex items-center gap-4 pt-2 border-t ${isDark ? 'border-gray-800' : 'border-gray-100'}`}>
-        <a
+      <Separator className={isDark ? 'bg-gray-800' : 'bg-gray-100'} />
+      <div className="flex items-center gap-2 pt-1">
+        <Button
+          asChild
+          variant="ghost"
+          size="sm"
+          className={`h-8 px-2.5 ${
+            isDark ? 'text-gray-400 hover:text-white hover:bg-gray-800' : 'text-gray-500 hover:text-gray-800 hover:bg-gray-100'
+          }`}
+        >
+          <a
           href={github}
           target="_blank"
           rel="noreferrer"
           aria-label="GitHub repository"
-          className={`flex items-center gap-1.5 text-sm transition hover:-translate-y-0.5 hover:gap-2 active:scale-95 ${
-            isDark ? 'text-gray-400 hover:text-white' : 'text-gray-400 hover:text-gray-800'
-          }`}
         >
           <Github size={15} />
           Code
-        </a>
-        <a
+          </a>
+        </Button>
+        <Button
+          asChild
+          variant="ghost"
+          size="sm"
+          className={`h-8 px-2.5 ${
+            isDark ? 'text-sky-400 hover:text-sky-300 hover:bg-sky-500/10' : 'text-sky-600 hover:text-sky-500 hover:bg-sky-50'
+          }`}
+        >
+          <a
           href={live}
           target="_blank"
           rel="noreferrer"
           aria-label="Live demo"
-          className={`flex items-center gap-1.5 text-sm transition hover:-translate-y-0.5 hover:gap-2 active:scale-95 ${
-            isDark ? 'text-sky-400 hover:text-sky-300' : 'text-sky-600 hover:text-sky-500'
-          }`}
         >
           <ExternalLink size={15} />
           Live Demo
-        </a>
+          </a>
+        </Button>
       </div>
 
-      </div>
-    </div>
+      </CardContent>
+      </Card>
+    </motion.div>
   )
 }
 
