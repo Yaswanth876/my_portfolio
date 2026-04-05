@@ -1,4 +1,5 @@
-import { motion } from 'framer-motion'
+import { motion, useInView } from 'framer-motion'
+import { useRef } from 'react'
 import { Briefcase, Trophy, MapPin, Calendar, Users } from 'lucide-react'
 import { useTheme } from '../context/ThemeContext'
 
@@ -64,10 +65,28 @@ const timeline = [
 ]
 
 const accentMap = {
-  sky:   { dot: 'bg-sky-500',   ping: 'bg-sky-500/20',   line: 'from-sky-500/70 via-sky-500/20',   icon: 'text-sky-400',   iconBg: 'bg-sky-500/10 border-sky-500/30',   orgText: 'text-sky-400',   bullet: 'bg-sky-500/70',   tag: 'bg-sky-500/15 text-sky-300 border-sky-500/30',   tagLight: 'bg-sky-50 text-sky-700 border-sky-200',   hover: 'hover:border-sky-500/50',   hoverLight: 'hover:border-sky-400/60',   orgTextLight: 'text-sky-600' },
-  amber: { dot: 'bg-amber-500', ping: 'bg-amber-500/20', line: 'from-amber-500/70 via-amber-500/20', icon: 'text-amber-400', iconBg: 'bg-amber-500/10 border-amber-500/30', orgText: 'text-amber-400', bullet: 'bg-amber-500/70', tag: 'bg-amber-500/15 text-amber-300 border-amber-500/30', tagLight: 'bg-amber-50 text-amber-700 border-amber-200', hover: 'hover:border-amber-500/50', hoverLight: 'hover:border-amber-400/60', orgTextLight: 'text-amber-600' },
-  green: { dot: 'bg-emerald-500', ping: 'bg-emerald-500/20', line: 'from-emerald-500/70 via-emerald-500/20', icon: 'text-emerald-400', iconBg: 'bg-emerald-500/10 border-emerald-500/30', orgText: 'text-emerald-400', bullet: 'bg-emerald-500/70', tag: 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30', tagLight: 'bg-emerald-50 text-emerald-700 border-emerald-200', hover: 'hover:border-emerald-500/50', hoverLight: 'hover:border-emerald-400/60', orgTextLight: 'text-emerald-600' },
-  blue:  { dot: 'bg-blue-500',  ping: 'bg-blue-500/20',  line: 'from-blue-500/70 via-blue-500/20',  icon: 'text-blue-400',  iconBg: 'bg-blue-500/10 border-blue-500/30',  orgText: 'text-blue-400',  bullet: 'bg-blue-500/70',  tag: 'bg-blue-500/15 text-blue-300 border-blue-500/30',  tagLight: 'bg-blue-50 text-blue-700 border-blue-200',  hover: 'hover:border-blue-500/50',  hoverLight: 'hover:border-blue-400/60',  orgTextLight: 'text-blue-600' },
+  sky:   { dot: 'bg-sky-500',     ping: 'bg-sky-500/20',     line: 'from-sky-500/70 via-sky-500/20',     icon: 'text-sky-400',     iconBg: 'bg-sky-500/10 border-sky-500/30',     orgText: 'text-sky-400',     bullet: 'bg-sky-500/70',     tag: 'bg-sky-500/15 text-sky-300 border-sky-500/30',     tagLight: 'bg-sky-50 text-sky-700 border-sky-200',     hover: 'hover:border-sky-500/50',     hoverLight: 'hover:border-sky-400/60',     orgTextLight: 'text-sky-600',     glow: 'hover:shadow-sky-500/8' },
+  amber: { dot: 'bg-amber-500',   ping: 'bg-amber-500/20',   line: 'from-amber-500/70 via-amber-500/20', icon: 'text-amber-400',   iconBg: 'bg-amber-500/10 border-amber-500/30',   orgText: 'text-amber-400',   bullet: 'bg-amber-500/70',   tag: 'bg-amber-500/15 text-amber-300 border-amber-500/30',   tagLight: 'bg-amber-50 text-amber-700 border-amber-200',   hover: 'hover:border-amber-500/50', hoverLight: 'hover:border-amber-400/60', orgTextLight: 'text-amber-600', glow: 'hover:shadow-amber-500/8' },
+  green: { dot: 'bg-emerald-500', ping: 'bg-emerald-500/20', line: 'from-emerald-500/70 via-emerald-500/20', icon: 'text-emerald-400', iconBg: 'bg-emerald-500/10 border-emerald-500/30', orgText: 'text-emerald-400', bullet: 'bg-emerald-500/70', tag: 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30', tagLight: 'bg-emerald-50 text-emerald-700 border-emerald-200', hover: 'hover:border-emerald-500/50', hoverLight: 'hover:border-emerald-400/60', orgTextLight: 'text-emerald-600', glow: 'hover:shadow-emerald-500/8' },
+  blue:  { dot: 'bg-blue-500',    ping: 'bg-blue-500/20',    line: 'from-blue-500/70 via-blue-500/20',   icon: 'text-blue-400',    iconBg: 'bg-blue-500/10 border-blue-500/30',     orgText: 'text-blue-400',    bullet: 'bg-blue-500/70',    tag: 'bg-blue-500/15 text-blue-300 border-blue-500/30',     tagLight: 'bg-blue-50 text-blue-700 border-blue-200',     hover: 'hover:border-blue-500/50',  hoverLight: 'hover:border-blue-400/60',  orgTextLight: 'text-blue-600', glow: 'hover:shadow-blue-500/8' },
+}
+
+// Animated vertical timeline line
+const TimelineLine = ({ isDark }) => {
+  const ref = useRef(null)
+  const inView = useInView(ref, { once: true, margin: '-100px' })
+
+  return (
+    <div ref={ref} className="absolute left-6 top-2 bottom-2 w-px overflow-hidden">
+      <motion.div
+        className="w-full bg-gradient-to-b from-sky-500/60 via-sky-500/20 to-transparent"
+        initial={{ height: '0%' }}
+        animate={{ height: inView ? '100%' : '0%' }}
+        transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+        style={{ originY: 0 }}
+      />
+    </div>
+  )
 }
 
 const Experience = () => {
@@ -82,7 +101,7 @@ const Experience = () => {
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
         className="mb-14"
       >
         <p className={`text-sm font-medium tracking-widest uppercase mb-3 ${isDark ? 'text-indigo-400' : 'text-sky-600'}`}>
@@ -99,8 +118,7 @@ const Experience = () => {
 
       {/* Timeline */}
       <div className="relative">
-        {/* Vertical line */}
-        <div className={`absolute left-6 top-2 bottom-2 w-px bg-gradient-to-b from-sky-500/60 via-sky-500/20 to-transparent`} />
+        <TimelineLine isDark={isDark} />
 
         <div className="flex flex-col gap-10">
           {timeline.map((item, index) => {
@@ -109,25 +127,34 @@ const Experience = () => {
             return (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: '-60px' }}
-                transition={{ duration: 0.5, ease: 'easeOut', delay: index * 0.08 }}
+                transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: index * 0.06 }}
                 className="relative pl-16"
               >
                 {/* Timeline dot */}
                 <div className="absolute left-[18px] top-6 flex items-center justify-center">
-                  <span className={`w-3 h-3 rounded-full ${a.dot} border-2 ${isDark ? 'border-gray-950' : 'border-slate-100'} z-10 relative`} />
+                  <motion.span
+                    initial={{ scale: 0 }}
+                    whileInView={{ scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ type: 'spring', stiffness: 400, damping: 18, delay: index * 0.06 + 0.3 }}
+                    className={`w-3 h-3 rounded-full ${a.dot} border-2 ${isDark ? 'border-gray-950' : 'border-slate-100'} z-10 relative`}
+                  />
                   <span className={`absolute w-5 h-5 rounded-full ${a.ping} animate-ping`} />
                 </div>
 
                 {/* Card */}
-                <div className={`border rounded-2xl p-4 sm:p-6 transition-all duration-300 ${
-                  isDark
-                    ? `bg-gray-900 border-gray-800 ${a.hover}`
-                    : `bg-white border-gray-200 shadow-sm ${a.hoverLight}`
-                }`}>
-
+                <motion.div
+                  whileHover={{ x: 4, scale: 1.01 }}
+                  transition={{ type: 'spring', stiffness: 300, damping: 22 }}
+                  className={`border rounded-2xl p-4 sm:p-6 transition-all duration-300 hover:shadow-lg ${
+                    isDark
+                      ? `bg-gray-900 border-gray-800 ${a.hover} ${a.glow}`
+                      : `bg-white border-gray-200 shadow-sm ${a.hoverLight}`
+                  }`}
+                >
                   {/* Type tag + date row */}
                   <div className="flex items-center justify-between gap-2 mb-4 flex-wrap">
                     <span className={`inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-full border ${
@@ -173,13 +200,20 @@ const Experience = () => {
                   {/* Points */}
                   <ul className="flex flex-col gap-2.5">
                     {item.points.map((point, i) => (
-                      <li key={i} className={`flex items-start gap-3 text-sm leading-relaxed ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                      <motion.li
+                        key={i}
+                        initial={{ opacity: 0, x: -8 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: i * 0.06 + 0.1, duration: 0.4 }}
+                        className={`flex items-start gap-3 text-sm leading-relaxed ${isDark ? 'text-gray-400' : 'text-gray-500'}`}
+                      >
                         <span className={`mt-2 w-1.5 h-1.5 rounded-full ${a.bullet} shrink-0`} />
                         {point}
-                      </li>
+                      </motion.li>
                     ))}
                   </ul>
-                </div>
+                </motion.div>
               </motion.div>
             )
           })}

@@ -7,11 +7,15 @@ import Projects from './components/Projects'
 import Experience from './components/Experience'
 import Certifications from './components/Certifications'
 import Contact from './components/Contact'
+import ScrollProgress from './components/ScrollProgress'
+import CustomCursor from './components/CustomCursor'
 import { ThemeProvider } from './context/ThemeContext'
 
 function App() {
   return (
     <ThemeProvider>
+      <ScrollProgress />
+      <CustomCursor />
       <div className="min-h-screen flex flex-col">
         <Navbar />
         <main className="pt-20 flex-1">

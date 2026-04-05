@@ -19,6 +19,7 @@ const certifications = [
       year:      'text-gray-500',
       viewLink:  'text-gray-500 hover:text-blue-400',
       title:     'text-white',
+      glow:      'hover:shadow-blue-500/10',
     },
     light: {
       card:      'bg-white border-blue-100 hover:border-blue-400/70',
@@ -31,6 +32,7 @@ const certifications = [
       year:      'text-gray-400',
       viewLink:  'text-gray-400 hover:text-blue-600',
       title:     'text-gray-900',
+      glow:      'hover:shadow-blue-500/10',
     },
     link: 'https://coursera.org',
   },
@@ -50,6 +52,7 @@ const certifications = [
       year:      'text-gray-500',
       viewLink:  'text-gray-500 hover:text-cyan-400',
       title:     'text-white',
+      glow:      'hover:shadow-cyan-500/10',
     },
     light: {
       card:      'bg-white border-cyan-100 hover:border-cyan-400/70',
@@ -62,6 +65,7 @@ const certifications = [
       year:      'text-gray-400',
       viewLink:  'text-gray-400 hover:text-cyan-600',
       title:     'text-gray-900',
+      glow:      'hover:shadow-cyan-500/10',
     },
     link: 'https://coursera.org',
   },
@@ -81,6 +85,7 @@ const certifications = [
       year:      'text-gray-500',
       viewLink:  'text-gray-500 hover:text-purple-400',
       title:     'text-white',
+      glow:      'hover:shadow-purple-500/10',
     },
     light: {
       card:      'bg-white border-purple-100 hover:border-purple-400/70',
@@ -93,6 +98,7 @@ const certifications = [
       year:      'text-gray-400',
       viewLink:  'text-gray-400 hover:text-purple-600',
       title:     'text-gray-900',
+      glow:      'hover:shadow-purple-500/10',
     },
     link: 'https://coursera.org',
   },
@@ -112,6 +118,7 @@ const certifications = [
       year:      'text-gray-500',
       viewLink:  'text-gray-500 hover:text-emerald-400',
       title:     'text-white',
+      glow:      'hover:shadow-emerald-500/10',
     },
     light: {
       card:      'bg-white border-emerald-100 hover:border-emerald-400/70',
@@ -124,6 +131,7 @@ const certifications = [
       year:      'text-gray-400',
       viewLink:  'text-gray-400 hover:text-emerald-600',
       title:     'text-gray-900',
+      glow:      'hover:shadow-emerald-500/10',
     },
     link: 'https://swayam.gov.in',
   },
@@ -131,12 +139,17 @@ const certifications = [
 
 const containerVariants = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.12 } },
+  visible: { transition: { staggerChildren: 0.1 } },
 }
 
 const cardVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
+  hidden: { opacity: 0, y: 30, scale: 0.96 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+  },
 }
 
 const Certifications = () => {
@@ -151,7 +164,7 @@ const Certifications = () => {
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
         className="mb-14"
       >
         <p className={`text-sm font-medium tracking-widest uppercase mb-3 ${isDark ? 'text-indigo-400' : 'text-sky-600'}`}>
@@ -178,14 +191,23 @@ const Certifications = () => {
             <motion.div
               key={cert.title}
               variants={cardVariants}
+              whileHover={{ y: -8, scale: 1.04 }}
+              transition={{ type: 'spring', stiffness: 280, damping: 20 }}
               className={`group relative bg-gradient-to-br ${s.gradient} ${s.card}
-                          border rounded-2xl p-6 flex flex-col gap-4
-                          transition-all duration-300 hover:-translate-y-1.5 hover:shadow-lg`}
+                          border rounded-2xl p-6 flex flex-col gap-4 overflow-hidden
+                          transition-all duration-300 hover:shadow-xl ${s.glow}`}
             >
-              {/* Icon */}
-              <div className={`w-10 h-10 rounded-xl border flex items-center justify-center transition ${s.iconBg}`}>
+              {/* Shine sweep on hover */}
+              <div className="card-shine" />
+
+              {/* Icon with rotation */}
+              <motion.div
+                whileHover={{ rotate: [0, -12, 12, 0], scale: 1.1 }}
+                transition={{ duration: 0.5 }}
+                className={`w-10 h-10 rounded-xl border flex items-center justify-center transition ${s.iconBg}`}
+              >
                 <Award size={18} className={s.iconColor} />
-              </div>
+              </motion.div>
 
               {/* Title */}
               <h3 className={`font-semibold text-sm leading-snug flex-1 ${s.title}`}>
@@ -205,15 +227,17 @@ const Certifications = () => {
               {/* Footer row */}
               <div className={`flex items-center justify-between pt-1 border-t ${s.divider}`}>
                 <span className={`text-xs ${s.year}`}>{cert.year}</span>
-                <a
+                <motion.a
                   href={cert.link}
                   target="_blank"
                   rel="noreferrer"
                   aria-label={`View ${cert.title} certificate`}
-                  className={`flex items-center gap-1 text-xs transition hover:-translate-y-0.5 hover:gap-1.5 active:scale-95 ${s.viewLink}`}
+                  whileHover={{ x: 2 }}
+                  whileTap={{ scale: 0.92 }}
+                  className={`flex items-center gap-1 text-xs transition active:scale-95 ${s.viewLink}`}
                 >
                   View <ExternalLink size={11} />
-                </a>
+                </motion.a>
               </div>
             </motion.div>
           )

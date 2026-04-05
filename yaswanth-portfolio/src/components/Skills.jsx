@@ -84,12 +84,12 @@ const skillCategories = [
 
 const containerVariants = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.1 } },
+  visible: { transition: { staggerChildren: 0.09 } },
 }
 
 const cardVariants = {
   hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
 }
 
 const Skills = () => {
@@ -104,7 +104,7 @@ const Skills = () => {
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
         className="mb-14"
       >
         <p className={`text-sm font-medium tracking-widest uppercase mb-3 ${isDark ? 'text-indigo-400' : 'text-sky-600'}`}>
@@ -115,10 +115,13 @@ const Skills = () => {
           My technical toolkit — built through academic coursework, personal
           projects, and hands-on development.
         </p>
-        <a
+        <motion.a
           href="/Yaswanth Resume.pdf"
           download="Yaswanth_Resume.pdf"
-          className={`mt-5 inline-flex items-center gap-2 text-sm font-medium px-5 py-2.5 rounded-xl border transition-all duration-200 hover:-translate-y-0.5 ${
+          whileHover={{ y: -2, scale: 1.02 }}
+          whileTap={{ scale: 0.97 }}
+          transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+          className={`mt-5 btn-ripple inline-flex items-center gap-2 text-sm font-medium px-5 py-2.5 rounded-xl border transition-colors duration-200 ${
             isDark
               ? 'bg-indigo-500/10 border-indigo-500/30 text-indigo-400 hover:bg-indigo-500/20 hover:border-indigo-400'
               : 'bg-sky-50 border-sky-300 text-sky-600 hover:bg-sky-100 hover:border-sky-400'
@@ -126,7 +129,7 @@ const Skills = () => {
         >
           <Download size={15} />
           Download Resume
-        </a>
+        </motion.a>
       </motion.div>
 
       {/* Skills grid */}
@@ -141,19 +144,28 @@ const Skills = () => {
           <motion.div
             key={category}
             variants={cardVariants}
-            className={`rounded-2xl p-6 border transition-all duration-300 group ${
+            whileHover={{ y: -5, scale: 1.02 }}
+            transition={{ type: 'spring', stiffness: 280, damping: 22 }}
+            className={`relative rounded-2xl p-6 border transition-all duration-300 group overflow-hidden ${
               isDark
-                ? 'bg-gray-900 border-gray-800 hover:border-indigo-500/50'
-                : 'bg-white border-gray-200 hover:border-sky-400/60 shadow-sm hover:shadow-md'
+                ? 'bg-gray-900 border-gray-800 hover:border-indigo-500/50 hover:shadow-xl hover:shadow-indigo-500/5'
+                : 'bg-white border-gray-200 hover:border-sky-400/60 shadow-sm hover:shadow-lg'
             }`}
           >
+            {/* Card shine layer */}
+            <div className="card-shine" />
+
             {/* Category header */}
             <div className="flex items-center gap-3 mb-5">
-              <div className={`w-9 h-9 rounded-lg border flex items-center justify-center transition ${
-                isDark ? iconBgDark : iconBgLight
-              }`}>
+              <motion.div
+                whileHover={{ rotate: [0, -10, 10, 0], scale: 1.1 }}
+                transition={{ duration: 0.4 }}
+                className={`w-9 h-9 rounded-lg border flex items-center justify-center transition ${
+                  isDark ? iconBgDark : iconBgLight
+                }`}
+              >
                 <Icon size={18} className={isDark ? iconColorDark : iconColorLight} />
-              </div>
+              </motion.div>
               <h3 className={`font-semibold text-base ${isDark ? 'text-white' : 'text-gray-800'}`}>{category}</h3>
             </div>
 
@@ -162,7 +174,7 @@ const Skills = () => {
               {skills.map((skill) => (
                 <span
                   key={skill}
-                  className={`text-sm px-3 py-1.5 border rounded-lg transition-colors duration-300 ${
+                  className={`skill-badge text-sm px-3 py-1.5 border rounded-lg transition-colors duration-300 ${
                     isDark ? skillBgDark : skillBgLight
                   }`}
                 >

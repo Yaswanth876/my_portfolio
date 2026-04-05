@@ -144,3 +144,184 @@ button {
 [data-theme="light"] .border-indigo-500\/30 { border-color: rgba(2,132,199,0.30) !important; }
 [data-theme="light"] .border-indigo-500\/50 { border-color: rgba(2,132,199,0.50) !important; }
 [data-theme="light"] .border-indigo-500\/60 { border-color: rgba(2,132,199,0.60) !important; }
+
+/* ─── Scroll Progress Bar ────────────────────────────────────────────────── */
+.scroll-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #38bdf8, #7c3aed, #a855f7);
+  transform-origin: 0%;
+  z-index: 9999;
+}
+
+/* ─── Custom Cursor ──────────────────────────────────────────────────────── */
+@media (pointer: fine) {
+  body { cursor: none; }
+  a, button, [role="button"] { cursor: none; }
+}
+
+.cursor-dot {
+  position: fixed;
+  top: -3px;
+  left: -3px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #38bdf8;
+  pointer-events: none;
+  z-index: 9999;
+  will-change: transform;
+  transition: width 0.15s ease, height 0.15s ease, background 0.15s ease;
+}
+
+.cursor-dot.cursor-hover {
+  width: 10px;
+  height: 10px;
+  background: #7c3aed;
+}
+
+.cursor-ring {
+  position: fixed;
+  top: -14px;
+  left: -14px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid rgba(56, 189, 248, 0.45);
+  pointer-events: none;
+  z-index: 9998;
+  will-change: transform;
+  transition: width 0.2s ease, height 0.2s ease, border-color 0.2s ease, border-width 0.2s ease;
+}
+
+.cursor-ring.cursor-hover {
+  width: 36px;
+  height: 36px;
+  top: -18px;
+  left: -18px;
+  border-color: rgba(124, 58, 237, 0.5);
+}
+
+/* ─── Floating Orb Keyframes ─────────────────────────────────────────────── */
+@keyframes float-slow {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); }
+  50%       { transform: translate(-50%, -52%) scale(1.04); }
+}
+@keyframes float-medium {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33%       { transform: translateY(-12px) rotate(3deg); }
+  66%       { transform: translateY(8px) rotate(-2deg); }
+}
+@keyframes float-fast {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-8px); }
+}
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.06; }
+  50%       { opacity: 0.14; }
+}
+
+.animate-float-slow   { animation: float-slow   8s ease-in-out infinite; }
+.animate-float-medium { animation: float-medium 6s ease-in-out infinite; }
+.animate-float-fast   { animation: float-fast   4s ease-in-out infinite; }
+.animate-pulse-glow   { animation: pulse-glow   4s ease-in-out infinite; }
+
+/* ─── Shimmer / Gradient Text Animation ─────────────────────────────────── */
+@keyframes shimmer-move {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+.text-shimmer {
+  background: linear-gradient(
+    90deg,
+    #38bdf8 0%, #a78bfa 30%, #c084fc 50%, #818cf8 70%, #38bdf8 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer-move 4s linear infinite;
+}
+
+/* ─── Card Shine Effect ──────────────────────────────────────────────────── */
+@keyframes card-shine {
+  0%   { left: -100%; opacity: 0; }
+  20%  { opacity: 0.06; }
+  100% { left: 120%; opacity: 0; }
+}
+.card-shine {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+}
+.card-shine::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    90deg, transparent 0%, rgba(255,255,255,0.10) 50%, transparent 100%
+  );
+  transform: skewX(-20deg);
+}
+.group:hover .card-shine::after {
+  animation: card-shine 0.7s ease-out;
+}
+
+/* ─── Form Input Focus Glow ──────────────────────────────────────────────── */
+.input-glow:focus {
+  box-shadow: 0 0 0 3px rgba(56,189,248,0.15), 0 0 16px rgba(56,189,248,0.06);
+}
+
+/* ─── Skill Badge Hover ──────────────────────────────────────────────────── */
+.skill-badge {
+  display: inline-flex;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.2s ease;
+}
+.skill-badge:hover {
+  transform: translateY(-2px) scale(1.05);
+}
+
+/* ─── Button Ripple ──────────────────────────────────────────────────────── */
+@keyframes btn-ripple {
+  from { transform: scale(0); opacity: 0.4; }
+  to   { transform: scale(2.5); opacity: 0; }
+}
+.btn-ripple {
+  position: relative;
+  overflow: hidden;
+}
+.btn-ripple::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: rgba(255,255,255,0.22);
+  transform: scale(0);
+  opacity: 0;
+}
+.btn-ripple:active::after {
+  animation: btn-ripple 0.4s ease-out;
+}
+
+/* ─── Reduced Motion ─────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .cursor-dot,
+  .cursor-ring { display: none !important; }
+  body { cursor: auto !important; }
+  a, button, [role="button"] { cursor: pointer !important; }
+}

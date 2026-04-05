@@ -1,27 +1,11 @@
 import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence, LayoutGroup } from 'framer-motion'
 import ProjectCard from './ProjectCard'
 import { projects } from '../data/projects'
 import { useTheme } from '../context/ThemeContext'
 import { Button } from './ui/button'
 
 const FILTERS = ['All', 'AI/ML', 'Full Stack']
-
-const containerVariants = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.15 },
-  },
-}
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 40 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: 'easeOut' },
-  },
-}
 
 const Projects = () => {
   const [activeFilter, setActiveFilter] = useState('All')
@@ -41,7 +25,7 @@ const Projects = () => {
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
         className="mb-10"
       >
         <p className={`text-sm font-medium tracking-widest uppercase mb-3 ${isDark ? 'text-indigo-400' : 'text-sky-600'}`}>
@@ -56,7 +40,7 @@ const Projects = () => {
         </p>
       </motion.div>
 
-      {/* Filter tabs */}
+      {/* Filter tabs with layout animation */}
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -64,38 +48,50 @@ const Projects = () => {
         transition={{ duration: 0.4, delay: 0.2 }}
         className="flex gap-3 mb-10"
       >
-        {FILTERS.map((filter) => (
-          <Button
-            key={filter}
-            onClick={() => setActiveFilter(filter)}
-            variant="outline"
-            className={`rounded-full text-sm font-medium border transition hover:-translate-y-0.5 active:scale-95
-              ${activeFilter === filter
-                ? 'bg-sky-500 border-sky-500 text-white'
-                : isDark
-                  ? 'border-gray-700 text-gray-400 hover:border-sky-500/50 hover:text-white'
-                  : 'border-gray-300 text-gray-500 hover:border-sky-400 hover:text-sky-600 bg-white'
-              }`}
-          >
-            {filter}
-          </Button>
-        ))}
+        <LayoutGroup>
+          {FILTERS.map((filter) => (
+            <motion.div key={filter} layout className="relative">
+              <Button
+                onClick={() => setActiveFilter(filter)}
+                variant="outline"
+                className={`rounded-full text-sm font-medium border transition-colors relative z-10
+                  ${activeFilter === filter
+                    ? 'bg-sky-500 border-sky-500 text-white hover:bg-sky-600'
+                    : isDark
+                      ? 'border-gray-700 text-gray-400 hover:border-sky-500/50 hover:text-white bg-transparent'
+                      : 'border-gray-300 text-gray-500 hover:border-sky-400 hover:text-sky-600 bg-white'
+                  }`}
+              >
+                {activeFilter === filter && (
+                  <motion.span
+                    layoutId="filter-pill"
+                    className="absolute inset-0 bg-sky-500 rounded-full -z-10"
+                    transition={{ type: 'spring', stiffness: 350, damping: 28 }}
+                  />
+                )}
+                {filter}
+              </Button>
+            </motion.div>
+          ))}
+        </LayoutGroup>
       </motion.div>
 
       {/* Cards grid */}
       <AnimatePresence mode="wait">
         <motion.div
           key={activeFilter}
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          exit={{ opacity: 0, transition: { duration: 0.2 } }}
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -8 }}
+          transition={{ duration: 0.3, ease: 'easeInOut' }}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch"
         >
-          {filtered.map((project) => (
+          {filtered.map((project, i) => (
             <motion.div
               key={project.id}
-              variants={cardVariants}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1], delay: i * 0.08 }}
               className="h-full"
             >
               <ProjectCard {...project} />
@@ -108,4 +104,3 @@ const Projects = () => {
 }
 
 export default Projects
-
