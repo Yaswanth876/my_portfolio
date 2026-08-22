@@ -83,34 +83,61 @@ const About = () => {
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
-        className="flex flex-col gap-4 mb-12"
+        className="grid md:grid-cols-[260px_minmax(0,1fr)] gap-8 items-start mb-12"
       >
-        {[
-          <>
-            I'm{' '}
-            <span className={`font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>Yaswanth</span>, a Computer Science Engineering student specializing in{' '}
-            <span className={`font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>Artificial Intelligence and Machine Learning</span>{' '}
-            at{' '}
-            <span className={`font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>Thiagarajar College of Engineering</span>. I enjoy building intelligent systems and full-stack applications that solve real-world problems.
-          </>,
-          <>
-            My work focuses on AI-powered applications, web platforms, and data-driven solutions, with experience in technologies like{' '}
-            <span className={`font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>Python, React, Node.js</span>, and machine learning tools. I'm passionate about learning new technologies and applying them to create practical, scalable software systems.
-          </>,
-          <>
-            Currently, I'm seeking opportunities to grow as a{' '}
-            <span className={`font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>software developer and AI engineer</span>{' '}
-            while contributing to impactful projects.
-          </>,
-        ].map((text, i) => (
-          <motion.p
-            key={i}
-            variants={itemVariants}
-            className={`text-lg leading-relaxed ${isDark ? 'text-gray-400' : 'text-gray-600'}`}
+        <motion.div variants={itemVariants} className="flex justify-center md:justify-start">
+          <motion.div
+            whileHover={{
+              y: -10,
+              rotate: 1.5,
+              scale: 1.02,
+              transition: { type: 'spring', stiffness: 260, damping: 18 },
+            }}
+            whileTap={{ scale: 0.98 }}
+            animate={{ y: [0, -8, 0] }}
+            transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+            className="relative w-60 h-60 sm:w-72 sm:h-72 rounded-[2.2rem] p-[3px] shadow-2xl bg-gray-200"
           >
-            {text}
-          </motion.p>
-        ))}
+            <div className={`h-full w-full rounded-[1.9rem] p-[3px] ${
+              isDark ? 'bg-gradient-to-br from-indigo-500 via-sky-500 to-cyan-400' : 'bg-gradient-to-br from-sky-400 via-indigo-500 to-violet-500'
+            }`}>
+              <img
+                src="/profile.png"
+                alt="Yaswanth profile"
+                className="h-full w-full rounded-[1.45rem] object-cover object-center bg-gray-200"
+              />
+            </div>
+          </motion.div>
+        </motion.div>
+
+        <div className="flex flex-col gap-4">
+          {[
+            <>
+              I'm{' '}
+              <span className={`font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>Yaswanth</span>, a Computer Science Engineering student specializing in{' '}
+              <span className={`font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>Artificial Intelligence and Machine Learning</span>{' '}
+              at{' '}
+              <span className={`font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>Thiagarajar College of Engineering</span>. I enjoy building intelligent systems and full-stack applications that solve real-world problems.
+            </>,
+            <>
+              My work focuses on AI-powered applications, web platforms, and data-driven solutions, with experience in technologies like{' '}
+              <span className={`font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>Python, React, Node.js</span>, and machine learning tools. I'm passionate about learning new technologies and applying them to create practical, scalable software systems.
+            </>,
+            <>
+              Currently, I'm seeking opportunities to grow as a{' '}
+              <span className={`font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>software developer and AI engineer</span>{' '}
+              while contributing to impactful projects.
+            </>,
+          ].map((text, i) => (
+            <motion.p
+              key={i}
+              variants={itemVariants}
+              className={`text-lg leading-relaxed ${isDark ? 'text-gray-400' : 'text-gray-600'}`}
+            >
+              {text}
+            </motion.p>
+          ))}
+        </div>
       </motion.div>
 
       {/* Stats row */}
