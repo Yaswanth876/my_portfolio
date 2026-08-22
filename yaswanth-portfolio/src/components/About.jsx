@@ -102,7 +102,7 @@ const About = () => {
               isDark ? 'bg-gradient-to-br from-indigo-500 via-sky-500 to-cyan-400' : 'bg-gradient-to-br from-sky-400 via-indigo-500 to-violet-500'
             }`}>
               <img
-                src="/profile.png"
+                src="/profile.webp"
                 alt="Yaswanth profile"
                 className="h-full w-full rounded-[1.45rem] object-cover object-center bg-gray-200"
               />
