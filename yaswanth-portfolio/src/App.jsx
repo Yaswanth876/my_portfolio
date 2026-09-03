@@ -7,31 +7,6 @@ import Projects from './components/Projects'
 import Experience from './components/Experience'
 import Certifications from './components/Certifications'
 import Contact from './components/Contact'
-import ScrollProgress from './components/ScrollProgress'
-import CustomCursor from './components/CustomCursor'
 import { ThemeProvider } from './context/ThemeContext'
-
-function App() {
-  return (
-    <ThemeProvider>
-      <ScrollProgress />
-      <CustomCursor />
-      <div className="min-h-screen flex flex-col">
-        <Navbar />
-        <main className="pt-20 flex-1">
-          {/* Each component's root <section> already carries the id */}
-          <Hero />
-          <About />
-          <Skills />
-          <Projects />
-          <Experience />
-          <Certifications />
-          <Contact />
-        </main>
-        <Footer />
-      </div>
-    </ThemeProvider>
-  )
-}
-
+function App(){return <ThemeProvider><div className="site-shell min-h-screen"><Navbar/><main className="pt-20"><Hero/><About/><Skills/><Projects/><Experience/><Certifications/><Contact/></main><Footer/></div></ThemeProvider>}
 export default App
